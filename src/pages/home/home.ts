@@ -38,14 +38,15 @@ export class HomePage {
         duration: 5000,
         position: "top"
       })
+      addToToast.present();
     }).catch(() => {
       addToToast = this.toast.create({
         message: 'Ooops, algo de errado aconteceu...',
         duration: 5000,
         position: "top"
       })
+      addToToast.present();
     });
-    addToToast.present();
   }
 
   ionViewDidLoad() {
