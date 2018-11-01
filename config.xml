@@ -84,6 +84,6 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-sms-plugin" spec="0.1.13" />
     <plugin name="cordova-plugin-x-toast" spec="2.7.0" />
-    <allow-navigation href="http://192.168.0.104:8100" sessionid="bfc6aeb8" />
+    <allow-navigation href="http://192.168.0.104:8100" sessionid="8cb28723" />
     <engine name="android" spec="7.1.1" />
 </widget>
