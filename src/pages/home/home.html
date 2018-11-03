@@ -7,12 +7,11 @@
 <ion-content padding>
   <ion-grid>
     <ion-item>
-      <ion-label color="primary" floating>Telefone</ion-label>
-      <ion-input type="tel" [(ngModel)]="phone"></ion-input>
+      <ion-label color="primary">Esperando sms...</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-textarea placeholder="Digite uma mensagem" [(ngModel)]="message"></ion-textarea>
+      <ion-textarea [(ngModel)]="message"></ion-textarea>
     </ion-item>
 
     <button ion-button color="secondary" (click)="sendMessage()">Enviar SMS</button>

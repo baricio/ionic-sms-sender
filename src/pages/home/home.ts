@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { SMS } from '@ionic-native/sms';
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the HomePage page.
  *
@@ -18,7 +20,22 @@ export class HomePage {
   phone: any;
   message: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private sms: SMS, private toast: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private sms: SMS, private toast: ToastController, private socket: Socket) {
+    this.phone = this.navParams.get('phone');
+
+    this.getMessages().subscribe(message => {
+      console.log('current message', message)
+      this.message = message;
+    });
+  }
+
+  getMessages() {
+    let observable = new Observable(observer => {
+      this.socket.on('message', (data) => {
+        observer.next(data);
+      });
+    })
+    return observable;
   }
 
   sendMessage(): void {
