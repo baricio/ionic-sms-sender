@@ -15,17 +15,24 @@ import { Observable } from 'rxjs/Observable';
   selector: 'page-home',
   templateUrl: 'home.html',
 })
+
 export class HomePage {
 
   phone: any;
-  message: any;
+  requests: Array<any>;
+  campaing: CampaignMessages[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sms: SMS, private toast: ToastController, private socket: Socket) {
     this.phone = this.navParams.get('phone');
 
-    this.getMessages().subscribe(message => {
-      console.log('current message', message)
-      this.message = message;
+    this.getMessages().subscribe(messages => {
+      this.campaing = messages as CampaignMessages[];
+      for (var i = this.campaing.length - 1; i >= 0; i--) {
+        console.log('3194076639', this.campaing[i].campaign.message);
+        this.sendMessage('31985270196', this.campaing[i].campaign.message);
+      }
+
+      Promise.all(this.requests).then(()=>this.requests = []);
     });
   }
 
@@ -38,9 +45,7 @@ export class HomePage {
     return observable;
   }
 
-  sendMessage(): void {
-    let addToToast = null;
-
+  sendMessage(phone, message): void {
     if (this.sms.hasPermission()) {
       let options = {
         replaceLineBreaks: false, // true to replace \n by a new line, false by default
@@ -50,30 +55,41 @@ export class HomePage {
       }
 
       // Send a text message using default options
-      this.sms.send(this.phone, this.message, options).then(() => {
-        addToToast = this.toast.create({
-          message: 'Sms enviado com sucesso!',
-          duration: 5000
-        })
-
-        
-      }).catch(() => {
-        addToToast = this.toast.create({
-          message: 'Ooops, algo de errado aconteceu...',
-          duration: 5000
-        })
-      });
-    } else {
-      addToToast = this.toast.create({
-        message: 'Permissão para enviar SMS não concedida.',
-        duration: 5000
-      })
+      this.requests.push(this.sms.send(phone, message, options))
     }
-    addToToast.present();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
 
+}
+
+export interface CampaignMessages {
+  id:any,
+  phone_number:any,
+  campaign_id:any,
+  sender_id:any,
+  reservation_id:any,
+  reserved_at:any,
+  sent_at:any,
+  status_id:any,
+  deleted_at:any,
+  created_at:any,
+  updated_at:any,
+  campaign: {
+      id: any,
+      name: any,
+      message: any,
+      scheduled: any,
+      start_date: any,
+      end_date: any,
+      start_time: any,
+      end_time: any,
+      user_id: any,
+      status_id: any,
+      deleted_at: any,
+      created_at: any,
+      updated_at: any
+  }
 }

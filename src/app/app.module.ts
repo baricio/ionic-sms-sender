@@ -8,7 +8,7 @@ import { MyApp } from './app.component';
 
 import { SMS } from '@ionic-native/sms';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'http://68.183.125.190', options: {} };
 
 @NgModule({
   declarations: [
